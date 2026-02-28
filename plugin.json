@@ -3,7 +3,7 @@
     "name": "Dank Audio Visualizer",
     "description": "Circular audio visualizer with bars, wave, rings, and bloom effects. Ported from Noctalia's fancy-audiovisualizer by Lemmy / Noctalia Team.",
     "version": "1.0.0",
-    "author": "Taliops (original: Lemmy / Noctalia Team)",
+    "author": "odtgit",
     "license": "MIT",
     "icon": "equalizer",
     "type": "desktop",

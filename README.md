@@ -9,7 +9,7 @@ Ported from **[Fancy Audiovisualizer](https://github.com/noctalia-dev/noctalia-p
 - **Original author:** Lemmy / [Noctalia Team](https://github.com/noctalia-dev)
 - **Original repository:** [noctalia-dev/noctalia-plugins](https://github.com/noctalia-dev/noctalia-plugins)
 - **Original license:** MIT
-- **DMS port by:** [Taliops](https://github.com/odtgit)
+- **DMS port by:** [odtgit](https://github.com/odtgit)
 
 ## What changed in the port
 
