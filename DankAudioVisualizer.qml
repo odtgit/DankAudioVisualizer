@@ -9,15 +9,15 @@ DesktopPluginComponent {
     minWidth: 200
     minHeight: 200
 
-    // Settings from pluginData (integer sliders scaled to real ranges)
-    readonly property real sensitivity: (pluginData.sensitivity ?? 15) / 10.0
-    readonly property real rotationSpeed: (pluginData.rotationSpeed ?? 5) / 10.0
-    readonly property real barWidth: (pluginData.barWidth ?? 6) / 10.0
-    readonly property real ringOpacity: (pluginData.ringOpacity ?? 80) / 100.0
-    readonly property real bloomIntensity: (pluginData.bloomIntensity ?? 50) / 100.0
+    // Settings from pluginData (0-100% sliders mapped to shader ranges)
+    readonly property real sensitivity: 0.5 + (pluginData.sensitivity ?? 40) / 100.0 * 2.5      // 0% → 0.5, 100% → 3.0
+    readonly property real rotationSpeed: (pluginData.rotationSpeed ?? 25) / 100.0 * 2.0         // 0% → 0.0, 100% → 2.0
+    readonly property real barWidth: 0.2 + (pluginData.barWidth ?? 50) / 100.0 * 0.8             // 0% → 0.2, 100% → 1.0
+    readonly property real ringOpacity: (pluginData.ringOpacity ?? 80) / 100.0                    // 0% → 0.0, 100% → 1.0
+    readonly property real bloomIntensity: (pluginData.bloomIntensity ?? 50) / 100.0              // 0% → 0.0, 100% → 1.0
     readonly property string visualizationMode: pluginData.visualizationMode ?? "barsRings"
-    readonly property real waveThickness: (pluginData.waveThickness ?? 10) / 10.0
-    readonly property real innerDiameter: (pluginData.innerDiameter ?? 70) / 100.0
+    readonly property real waveThickness: 0.3 + (pluginData.waveThickness ?? 41) / 100.0 * 1.7   // 0% → 0.3, 100% → 2.0
+    readonly property real innerDiameter: (pluginData.innerDiameter ?? 70) / 100.0                // 0% → 0.0, 100% → 1.0
     readonly property bool fadeWhenIdle: pluginData.fadeWhenIdle ?? false
     readonly property bool useCustomColors: pluginData.useCustomColors ?? false
     readonly property color customPrimaryColor: pluginData.customPrimaryColor ?? "#6750A4"

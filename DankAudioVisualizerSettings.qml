@@ -24,28 +24,28 @@ PluginSettings {
     SliderSetting {
         settingKey: "sensitivity"
         label: "Sensitivity"
-        description: "Audio reactivity (0.5x to 3.0x)"
-        minimum: 5
-        maximum: 30
-        defaultValue: 15
+        minimum: 0
+        maximum: 100
+        defaultValue: 40
+        unit: "%"
     }
 
     SliderSetting {
         settingKey: "rotationSpeed"
         label: "Rotation Speed"
-        description: "Visualization rotation (0.0 to 2.0)"
         minimum: 0
-        maximum: 20
-        defaultValue: 5
+        maximum: 100
+        defaultValue: 25
+        unit: "%"
     }
 
     SliderSetting {
         settingKey: "barWidth"
         label: "Bar Width"
-        description: "Width of frequency bars (0.2 to 1.0)"
-        minimum: 2
-        maximum: 10
-        defaultValue: 6
+        minimum: 0
+        maximum: 100
+        defaultValue: 50
+        unit: "%"
     }
 
     SliderSetting {
@@ -69,10 +69,10 @@ PluginSettings {
     SliderSetting {
         settingKey: "waveThickness"
         label: "Wave Thickness"
-        description: "Wave fill thickness (0.3 to 2.0)"
-        minimum: 3
-        maximum: 20
-        defaultValue: 10
+        minimum: 0
+        maximum: 100
+        defaultValue: 41
+        unit: "%"
     }
 
     SliderSetting {
