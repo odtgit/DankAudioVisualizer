@@ -24,7 +24,7 @@ Ported from **[Fancy Audiovisualizer](https://github.com/noctalia-dev/noctalia-p
 
 ![screenshot](https://raw.githubusercontent.com/odtgit/DankAudioVisualizer/main/preview.png)
 
-https://github.com/odtgit/DankAudioVisualizer/raw/main/preview.mp4
+<video src="https://github.com/odtgit/DankAudioVisualizer/releases/download/v1.0.0/preview.mp4" controls width="640"></video>
 
 ## Features
 
