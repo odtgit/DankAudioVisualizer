@@ -20,6 +20,12 @@ Ported from **[Fancy Audiovisualizer](https://github.com/noctalia-dev/noctalia-p
 - Theme integration switched from Noctalia `Color.*` / `Style.*` to DMS `Theme.*`
 - GLSL 450 shader copied unchanged — all rendering logic is identical to the original
 
+## Preview
+
+![screenshot](https://raw.githubusercontent.com/odtgit/DankAudioVisualizer/main/preview.png)
+
+https://github.com/odtgit/DankAudioVisualizer/raw/main/preview.mp4
+
 ## Features
 
 - 6 visualization modes: Bars, Wave, Rings, Bars+Rings, Wave+Rings, All
