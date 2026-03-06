@@ -9,6 +9,10 @@ QtObject {
     property int refCount: 0
     property bool cavaAvailable: false
     property bool isIdle: true
+    property int lowerCutoffFreq: 50
+    property int higherCutoffFreq: 12000
+    readonly property int effectiveLowCutoffFreq: Math.max(1, Math.min(lowerCutoffFreq, higherCutoffFreq - 1))
+    readonly property int effectiveHighCutoffFreq: Math.min(20000, Math.max(higherCutoffFreq, effectiveLowCutoffFreq + 1))
 
     // Idle detection: consider idle when all values near zero for idleTimeout ms
     property int idleTimeout: 2000
@@ -17,6 +21,15 @@ QtObject {
     property var _idleTimer: Timer {
         interval: root.idleTimeout
         onTriggered: root.isIdle = true
+    }
+
+    property var _restartTimer: Timer {
+        interval: 30
+        repeat: false
+        onTriggered: {
+            if (root.cavaAvailable && root.refCount > 0)
+                root._cavaProcess.running = true;
+        }
     }
 
     property var _cavaCheck: Process {
@@ -36,8 +49,9 @@ framerate=60
 bars=32
 autosens=0
 sensitivity=80
-lower_cutoff_freq=50
-higher_cutoff_freq=12000
+# previous values: lower_cutoff_freq=50, higher_cutoff_freq=12000
+lower_cutoff_freq=${root.effectiveLowCutoffFreq}
+higher_cutoff_freq=${root.effectiveHighCutoffFreq}
 
 [output]
 method=raw
@@ -91,5 +105,19 @@ CAVACONF`]
 
     Component.onCompleted: {
         _cavaCheck.running = true;
+    }
+
+    onLowerCutoffFreqChanged: {
+        if (_cavaProcess.running) {
+            _cavaProcess.running = false;
+            _restartTimer.restart();
+        }
+    }
+
+    onHigherCutoffFreqChanged: {
+        if (_cavaProcess.running) {
+            _cavaProcess.running = false;
+            _restartTimer.restart();
+        }
     }
 }

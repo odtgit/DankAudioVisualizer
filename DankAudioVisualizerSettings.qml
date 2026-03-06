@@ -84,6 +84,22 @@ PluginSettings {
         unit: "%"
     }
 
+    StringSetting {
+        settingKey: "lowerCutoffFreq"
+        label: "Low Cutoff Frequency"
+        description: "Lower bound of the frequency range analyzed by cava (1-19999 Hz)"
+        placeholder: "50"
+        defaultValue: "50"
+    }
+
+    StringSetting {
+        settingKey: "higherCutoffFreq"
+        label: "High Cutoff Frequency"
+        description: "Upper bound of the frequency range analyzed by cava (2-20000 Hz)"
+        placeholder: "12000"
+        defaultValue: "12000"
+    }
+
     ToggleSetting {
         settingKey: "fadeWhenIdle"
         label: "Fade When Idle"
