@@ -18,6 +18,14 @@ DesktopPluginComponent {
     readonly property string visualizationMode: pluginData.visualizationMode ?? "barsRings"
     readonly property real waveThickness: 0.3 + (pluginData.waveThickness ?? 41) / 100.0 * 1.7   // 0% → 0.3, 100% → 2.0
     readonly property real innerDiameter: (pluginData.innerDiameter ?? 70) / 100.0                // 0% → 0.0, 100% → 1.0
+    readonly property int lowerCutoffFreq: {
+        const n = Number(pluginData.lowerCutoffFreq ?? 50)
+        return Number.isFinite(n) ? Math.round(n) : 50
+    }
+    readonly property int higherCutoffFreq: {
+        const n = Number(pluginData.higherCutoffFreq ?? 12000)
+        return Number.isFinite(n) ? Math.round(n) : 12000
+    }
     readonly property bool fadeWhenIdle: pluginData.fadeWhenIdle ?? false
     readonly property bool useCustomColors: pluginData.useCustomColors ?? false
     readonly property color customPrimaryColor: pluginData.customPrimaryColor ?? "#6750A4"
@@ -39,6 +47,8 @@ DesktopPluginComponent {
     // Self-contained cava audio source (32 bars, 60 FPS)
     CavaProcess {
         id: cavaProcess
+        lowerCutoffFreq: root.lowerCutoffFreq
+        higherCutoffFreq: root.higherCutoffFreq
     }
 
     // Manage cava lifecycle via reference counting
