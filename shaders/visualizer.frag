@@ -68,7 +68,7 @@ vec4 computePolarWave(vec2 uv, float iTime, float bass, float mid, float highMid
     float theta = atan(centered.y, centered.x);
     float d = length(centered);
     float innerRadius = ubuf.innerDiameter / 2.0;
-    float baseRadius = 0.35; // Fixed reference for outer extent
+    float baseRadius = innerRadius; // Bars/wave start from the ring boundary
 
     vec4 color = vec4(0.0);
 
@@ -180,7 +180,7 @@ vec4 computePolarWave(vec2 uv, float iTime, float bass, float mid, float highMid
 
         // Calculate wave radius at this angle
         float waveDisplacement = smoothedAudio * 0.5;
-        float waveRadius = baseRadius + waveDisplacement; // Fixed outer extent
+        float waveRadius = baseRadius + waveDisplacement;
 
         // Fill the entire area from inner to wave edge
         if (d >= innerRadius && d <= waveRadius) {
@@ -230,7 +230,7 @@ vec4 computeVisualization(vec2 uv, float iTime, float bass, float mid, float hig
     float theta = atan(centered.y, centered.x);
     float d = length(centered);
     float innerRadius = ubuf.innerDiameter / 2.0;
-    float baseRadius = 0.35; // Fixed reference for outer extent
+    float baseRadius = innerRadius; // Bars/wave start from the ring boundary
 
     vec4 color = vec4(0.0);
 
@@ -327,7 +327,7 @@ vec4 computeVisualization(vec2 uv, float iTime, float bass, float mid, float hig
             v = max(v, 0.0);
 
             float barStart = innerRadius;
-            float barEnd = baseRadius + v * 0.5; // Fixed outer extent
+            float barEnd = baseRadius + v * 0.5;
 
             if (d >= barStart && d <= barEnd) {
                 float heightFactor = (d - barStart) / max(barEnd - barStart, 0.001);
@@ -367,20 +367,16 @@ void main() {
     // nothing ever reaches the widget border.
     //
     // Max visualization radius in centered space [-1,1]:
-    //   Bars/Wave: baseRadius(0.35) + sensitivity * 0.5
-    //   Rings:     innerDiameter/2 + sensitivity * 0.05 (always smaller)
-    //
-    // Bloom reach: exp(-dist * minDecayRate / bloomIntensity) decays to
-    // < 1/255 at dist ≈ bloomIntensity * 1.0 (from solving exp decay
-    // with worst-case amplitude * multiplier chain)
+    //   Bars/Wave: innerDiameter/2 + sensitivity * 0.5
+    //   Bloom decays exponentially — visually negligible past ~0.4 * bloomIntensity
     //
     // contentScale maps the widget edge to ±contentScale in centered space,
     // so setting it to maxTotalRadius ensures everything fits.
 
-    float maxContentRadius = 0.35 + ubuf.sensitivity * 0.5;
-    float maxBloomReach = ubuf.bloomIntensity * 1.0;
+    float maxContentRadius = ubuf.innerDiameter / 2.0 + ubuf.sensitivity * 0.5;
+    float maxBloomReach = ubuf.bloomIntensity * 0.4;
     float maxTotalRadius = maxContentRadius + maxBloomReach;
-    float contentScale = max(maxTotalRadius * 1.05, 1.0); // 5% safety margin
+    float contentScale = max(maxTotalRadius, 1.0);
 
     vec2 uv = (qt_TexCoord0 - 0.5) * contentScale + 0.5;
 
@@ -429,7 +425,7 @@ void main() {
         float theta = atan(centered.y, centered.x);
 
         float innerRadius = ubuf.innerDiameter / 2.0;
-        float baseRadius = 0.35; // Fixed reference for outer extent
+        float baseRadius = innerRadius;
         float glowAmount = 0.0;
         vec3 glowColor = vec3(0.0);
 
@@ -482,7 +478,7 @@ void main() {
                 );
                 smoothedAudio = max(smoothedAudio, 0.0);
 
-                float waveRadius = baseRadius + smoothedAudio * 0.5;
+                float waveRadius = innerRadius + smoothedAudio * 0.5;
 
                 // Glow from the filled area and edge
                 float distToWave = abs(d - waveRadius);
@@ -500,7 +496,7 @@ void main() {
                 float center = section / 2.0;
 
                 float barAngleDist = min(abs(m - center), section - abs(m - center));
-                float barEnd = baseRadius + v * 0.5; // Fixed outer extent
+                float barEnd = innerRadius + v * 0.5;
 
                 float radialDist = 0.0;
                 if (d < innerRadius) {
